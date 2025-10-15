@@ -1,0 +1,36 @@
+services:
+  postgresdb:
+    image: postgres:16
+    volumes:
+      - postgresdb:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=user5
+      - POSTGRES_PASSWORD=pass5
+      - POSTGRES_DB=postgres_db5
+    container_name: postgres-db
+    
+
+  flask-app:
+    build: .
+    container_name: db_app5
+    ports:
+      - 5043:5000
+    volumes:
+      - logs:/app/logs
+    environment:
+      - DB_USER=user5
+      - DB_PASSWORD=pass5
+      - DB_HOST=postgres-db
+      - DB_NAME=postgres_db5
+    depends_on:
+      - postgresdb
+    
+
+
+volumes:
+  postgresdb:
+  logs:
+
+networks:
+  net5-subnet:
+
