@@ -3,10 +3,8 @@ services:
     image: postgres:16
     volumes:
       - postgresdb:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=user5
-      - POSTGRES_PASSWORD=pass5
-      - POSTGRES_DB=postgres_db5
+    env_file:
+      - postgres.env
     container_name: postgres-db
     networks:
       - net5-subnet
@@ -22,11 +20,8 @@ services:
       - 5043:5000
     volumes:
       - logs:/app/logs
-    environment:
-      - DB_USER=user5
-      - DB_PASSWORD=pass5
-      - DB_HOST=postgres-db
-      - DB_NAME=postgres_db5
+    env_file:
+      - flask-app.env
     depends_on:
       - postgresdb
     networks:
@@ -36,14 +31,13 @@ services:
     image: flaskapp:V5   
     container_name: db_app6
     depends_on:
+      - postgresdb
       - flask-app
     ports:
       - 5044:5000
-    environment:
-      - DB_USER=user5
-      - DB_PASSWORD=pass5
-      - DB_HOST=postgres-db
-      - DB_NAME=postgres_db5
+      - 5045:5000
+    env_file:
+      - flask-app.env
     volumes:
       - log:/app/logs
     networks:
