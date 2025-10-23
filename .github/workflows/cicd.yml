@@ -9,7 +9,7 @@ jobs:
         steps:
             name: checkout code
             uses: actions/checkout@v4
-            name: setup python environment
+            name: setup python environment 
             uses: actions/setup-python@v5
             with:
                 python-version: "3.13"
@@ -28,4 +28,3 @@ jobs:
             run: |
                 python3 -m pip install --upgrade pip &
                 pip install -r requirments.txt
-
