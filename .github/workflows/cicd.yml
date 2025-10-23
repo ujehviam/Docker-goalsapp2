@@ -20,7 +20,7 @@ jobs:
                 source venvgoalsapp/bin/activate
                 echo "you are now inside the virtual environment"
             - name: cache dependencies
-              uses: action/cache@v4
+              uses: actions/cache@v4
               with:
                 path: ~/.cache/pip
                 key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }} 
