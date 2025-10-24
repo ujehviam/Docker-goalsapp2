@@ -5,43 +5,50 @@ on:
             - master
 jobs:
     checkout_code_Build_and_Test:
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout code
-              uses: actions/checkout@v4
-            - name: setup python environment 
-              uses: actions/setup-python@v5
-              with:
-                python-version: "3.13"
-            - name: setup virtual environment
-              run: |
-                python -m venv venvgoalsapp
-                echo "virtual environment has been set up"
-                source venvgoalsapp/bin/activate
-                echo "you are now inside the virtual environment"
-            - name: cache dependencies
-              uses: actions/cache@v4
-              with:
-                path: ~/.cache/pip
-                key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }} 
-            - name: install dependencies
-              run: |
-                python3 -m pip install --upgrade pip &
-                pip install -r ./Backend/requirements.txt
-            - name: Test code
-              run: |
-                pytest -v > test_result.txt 2>&1
-    #Test:
-      #runs-on: ubuntu_latest
-      #if: failure()
-      #steps:
-        #- name: checkout code
-          #uses: actions/checkout@v4
-        #- name: setup python
-          #uses: actions/setup-python@v5
-          #with:
-            #python-version: "3.13"
-        #- name: create virtual environmet to run the python app
-          #run: |
-            
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout code
+          uses: actions/checkout@v4
+        - name: setup python environment 
+          uses: actions/setup-python@v5
+          with:
+            python-version: "3.13"
+        - name: setup virtual environment
+          run: |
+            python -m venv venvgoalsapp
+            echo "virtual environment has been set up"
+            source venvgoalsapp/bin/activate
+            echo "you are now inside the virtual environment"
+        - name: cache dependencies
+          uses: actions/cache@v4
+          with:
+            path: ~/.cache/pip
+            key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }} 
+        - name: install dependencies
+          run: |
+            python3 -m pip install --upgrade pip &
+            pip install -r ./Backend/requirements.txt
+        - name: Test code
+          run: |
+            pytest -v > test_result.txt 2>&1
+
+    Docker_Build_push_if_failed:
+      needs: checkout_code_Build_and_Test
+      runs-on: ubuntu-latest
+      if: failure()
+      steps:
+        - name: report failure
+          run: |
+            echo "❌ cannot upload to Docker hub, error in previous job"
+        
+    Docker_Build_push_if_successful:
+      needs: checkout_code_Build_and_Test
+      runs-on: ubuntu-latest
+      if: success()
+      steps:
+        - name: report success
+          run: |
+            echo "✅ successfully uploaded to Docker hub"
+
+
    
