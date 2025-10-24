@@ -11,7 +11,7 @@ def client():
 
 
 # ---------- Test GET /api/goals ----------
-@patch("app.get_goals")
+@patch("app.get_goal")
 def test_get_goals(mock_get_goals, client):
     mock_get_goals.return_value = [
         {"id": 1, "goal": "Learn Flask"},
