@@ -30,7 +30,7 @@ jobs:
                 pip install -r ./Backend/requirements.txt
             - name: Test code
               run: |
-                pytest -v
+                pytest -v > test_result.txt 2>&1
     #Test:
       #runs-on: ubuntu_latest
       #if: failure()
