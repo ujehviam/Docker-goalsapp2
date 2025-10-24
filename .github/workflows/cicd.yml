@@ -55,7 +55,7 @@ jobs:
           run: |
             echo "✅ you have successfully logged into dockerhub"
             echo $(pwd)
-            echd $(ls)
+            echo $(ls)
        # - name: Build and tag Docker image
         #  run: |
          #   docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/goalsapp:cicd ../
