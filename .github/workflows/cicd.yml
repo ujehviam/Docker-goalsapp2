@@ -4,7 +4,7 @@ on:
         branches:
             - master
 jobs:
-    checkout_code:
+    checkout_code_Build_and_Test:
         runs-on: ubuntu-latest
         steps:
             - name: checkout code
@@ -28,3 +28,20 @@ jobs:
               run: |
                 python3 -m pip install --upgrade pip &
                 pip install -r ./Backend/requirements.txt
+            - name: Test code
+              run: |
+                pytest -v
+    #Test:
+      #runs-on: ubuntu_latest
+      #if: failure()
+      #steps:
+        #- name: checkout code
+          #uses: actions/checkout@v4
+        #- name: setup python
+          #uses: actions/setup-python@v5
+          #with:
+            #python-version: "3.13"
+        #- name: create virtual environmet to run the python app
+          #run: |
+            
+   
