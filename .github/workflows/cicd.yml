@@ -19,6 +19,8 @@ jobs:
             echo "virtual environment has been set up"
             source venvgoalsapp/bin/activate
             echo "you are now inside the virtual environment"
+            echo $(pwd)
+            echo $(ls)
         - name: cache dependencies
           uses: actions/cache@v4
           with:
