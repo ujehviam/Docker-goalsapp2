@@ -54,11 +54,12 @@ jobs:
         - name: dockerhub login
           run: |
             echo "✅ you have successfully logged into dockerhub"
+            echo $(ls)
             echo $(pwd)
             echo $(ls)
        # - name: Build and tag Docker image
         #  run: |
-         #   docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/goalsapp:cicd ../
+         #   docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/goalsapp:cicd .
         #- name: push image to dockerhub
          # run: |
           #  docker push ${{ secrets.DOCKERHUB_USERNAME }}/goalsapp:cicd
