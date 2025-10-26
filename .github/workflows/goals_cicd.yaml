@@ -21,7 +21,9 @@ jobs:
                 path: ~/.cache/pip
                 key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
             - name: install dependencies
-              run: pip install -r ./backend/requirements.txt  
+              run: |
+                echo $(pwd)
+                pip install -r ./backend/requirements.txt  
             - name: run code
               run: |
                 python3 ./backend/app.py &
