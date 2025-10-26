@@ -10,15 +10,15 @@ jobs:
             ports:
               - 5432:5432
             env:
-              POSTGRES_USER: ${{ secrets.DB_USERNAME }}
-              POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-              POSTGRES_DB: ${{ secrets.DB_NAME }}
+              POSTGRES_USER: user5
+              POSTGRES_PASSWORD: pass5
+              POSTGRES_DB: postgres_db5
             options: >-
               --health-cmd="pg_isready -u flaskuser"
               --health-interval=10s
               --health-timeout=5s
               --health-retries=5
-              
+
         steps:
             - name: wait for postgresDB to start
               run: |
