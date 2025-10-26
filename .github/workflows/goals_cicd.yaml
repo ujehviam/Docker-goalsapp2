@@ -13,6 +13,7 @@ jobs:
               POSTGRES_USER: user5
               POSTGRES_PASSWORD: pass5
               POSTGRES_DB: postgres_db5
+
             options: >-
               --health-cmd="pg_isready -U user5"
               --health-interval=10s
@@ -22,7 +23,7 @@ jobs:
         steps:
             - name: wait for postgresDB to start
               run: |
-                until pg_isready -h localhost -p 5432 -U user5; do
+                until pg_isready -h postgres_db -p 5432 -U user5; do
                   echo "waiting for DB to start"
                   sleep 2
                 done
@@ -49,12 +50,11 @@ jobs:
                 pip install -r ./Backend/requirements.txt  
             - name: run code
               env:
-
-                POSTGRES_HOST: localhost
-                POSTGRES_PORT: 5432
-                POSTGRES_USER: user5
-                POSTGRES_PASSWORD: pass5
-                POSTGRES_DB: postgres_db5
+                DB_HOST: postgres_db        # ✅ match database.py
+                DB_PORT: 5432
+                DB_USER: user5
+                DB_PASSWORD: pass5
+                DB_NAME: postgres_db5
               run: |
                 python3 ./Backend/app.py &
                 pytest -v 
