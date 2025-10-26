@@ -48,6 +48,8 @@ jobs:
                 echo $(pwd)
                 pip install -r ./Backend/requirements.txt  
             - name: run code
+              env:
+                DATABASE_URL: postgresql://user5:pass5@localhost:5432/postgres_db5
               run: |
                 python3 ./Backend/app.py &
                 pytest -v 
