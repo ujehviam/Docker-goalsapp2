@@ -1,5 +1,5 @@
 name: goals CI/CD
-on: workflow_dispatch
+on: [push, workflow_dispatch]
 jobs:
     Build_and_Test:
         runs-on: ubuntu-latest
@@ -26,6 +26,7 @@ jobs:
                 pip install -r ./Backend/requirements.txt  
             - name: run code
               run: |
+                python3 ./Backend/database.py
                 python3 ./Backend/app.py &
                 pytest -v 
                 
