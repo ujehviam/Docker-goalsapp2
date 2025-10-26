@@ -3,7 +3,29 @@ on: [push, workflow_dispatch]
 jobs:
     Build_and_Test:
         runs-on: ubuntu-latest
+
+        services:
+          postgres_db:
+            image: postgres:16
+            ports:
+              - 5432:5432
+            env:
+              POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+              POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+              POSTGRES_DB: ${{ secrets.DB_NAME }}
+            options: >-
+              --health-cmd="pg_isready -u flaskuser"
+              --health-interval=10s
+              --health-timeout=5s
+              --health-retries=5
+              
         steps:
+            - name: wait for postgresDB to start
+              run: |
+                until pg_isready -h localhost -p 5432:5432; do
+                  echo "waiting for DB to start"
+                  sleep 2
+                done
             - name: checkout code
               uses: actions/checkout@v4
             - name: setup python on the VM
@@ -26,7 +48,6 @@ jobs:
                 pip install -r ./Backend/requirements.txt  
             - name: run code
               run: |
-                python3 ./Backend/database.py
                 python3 ./Backend/app.py &
                 pytest -v 
                 
