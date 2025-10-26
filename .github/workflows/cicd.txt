@@ -42,7 +42,7 @@ jobs:
         - name: report failure
           run: |
             echo "❌ cannot upload to Docker hub, error in previous job"
-        
+                  
     Docker_Build_push_if_successful:
       needs: checkout_code_Build_and_Test
       runs-on: ubuntu-latest
@@ -76,12 +76,8 @@ jobs:
           with:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
-        - name: dockerhub login
           run: |
-            echo "✅ you have successfully logged into dockerhub"
-            echo $(ls)
-            echo $(pwd)
-            echo $(ls)
+            echo "✅ you have successfully logged into dockerhub
         - name: Build and tag Docker image
           run: |
             docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/goalsapp:cicd .
@@ -91,5 +87,3 @@ jobs:
         - name: success message
           run: |
             echo "✅ image successfully uploaded to dockerhub"            
-
-   
