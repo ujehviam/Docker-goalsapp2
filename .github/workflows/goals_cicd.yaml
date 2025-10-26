@@ -49,7 +49,12 @@ jobs:
                 pip install -r ./Backend/requirements.txt  
             - name: run code
               env:
-                DATABASE_URL: postgresql://user5:pass5@localhost:5432/postgres_db5
+
+                POSTGRES_HOST: localhost
+                POSTGRES_PORT: 5432
+                POSTGRES_USER: user5
+                POSTGRES_PASSWORD: pass5
+                POSTGRES_DB: postgres_db5
               run: |
                 python3 ./Backend/app.py &
                 pytest -v 
