@@ -2,10 +2,10 @@ import psycopg2
 import os
 
 # --- Database configuration from environment variables ---
-DB_HOST = os.getenv("DB_HOST", "postgres-db")
+DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_NAME = os.getenv("DB_NAME", "goalsdb")
-DB_USER = os.getenv("DB_USER", "flaskuser")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "flaskpass")
+DB_USER = os.getenv("DB_USER", "user5")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "pass5")
 DB_PORT = os.getenv("DB_PORT", "5432")
 
 def get_connection():

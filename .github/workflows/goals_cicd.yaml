@@ -12,7 +12,7 @@ jobs:
             env:
               POSTGRES_USER: user5
               POSTGRES_PASSWORD: pass5
-              POSTGRES_DB: postgres_db5
+              POSTGRES_DB: goalsdb
 
             options: >-
               --health-cmd="pg_isready -U user5"
@@ -21,13 +21,6 @@ jobs:
               --health-retries=5
 
         steps:
-            - name: wait for postgresDB to start
-              run: |
-                until pg_isready -h postgres_db -p 5432 -U user5; do
-                  echo "waiting for DB to start"
-                  sleep 2
-                done
-                echo "database is ready for use"
             - name: checkout code
               uses: actions/checkout@v4
             - name: setup python on the VM
@@ -46,18 +39,36 @@ jobs:
                 key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
             - name: install dependencies
               run: |
+                source venvgoalsapp/bin/activate
                 echo $(pwd)
                 pip install -r ./Backend/requirements.txt  
+            - name: Install PostgreSQL client
+              run: sudo apt-get update && sudo apt-get install -y postgresql-client
+            - name: wait for postgresDB to start
+              run: |
+                until pg_isready -h postgres_db -p 5432 -U user5; do
+                  echo "waiting for DB to start"
+                  sleep 2
+                done
+                echo "database is ready for use"
             - name: run code
               env:
                 DB_HOST: postgres_db        # ✅ match database.py
                 DB_PORT: 5432
                 DB_USER: user5
                 DB_PASSWORD: pass5
-                DB_NAME: postgres_db5
+                DB_NAME: goalsdb
               run: |
-                python3 ./Backend/app.py &
-                pytest -v 
+                source venvgoalsapp/bin/activate
+                nohup python3 ./Backend/app.py > app.log 2>&1 &
+                sleep 5
+                pytest -v || (cat app.log && false)
+            - name: Upload logs (if tests fail)
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                name: backend-logs
+                path: app.log
                 
 
 
