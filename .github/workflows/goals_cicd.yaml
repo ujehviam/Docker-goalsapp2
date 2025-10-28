@@ -48,14 +48,21 @@ jobs:
               run: |
                 echo "⏳ Waiting for Postgres service to become ready..."
                 for i in {1..20}; do
-                  pg_isready -h postgres_db -p 5432 -U user5 -d goalsdb && echo "✅ Postgres is ready!" && break
+                  if pg_isready -h postgres_db -p 5432 -U user5 -d goalsdb; then
+                    echo "✅ Postgres is ready!"
+                    break
+                  fi
                   echo "Still waiting for Postgres ($i/20)..."
                   sleep 5
                 done
-                pg_isready -h postgres_db -p 5432 -U user5 -d goalsdb
+
+                if ! pg_isready -h postgres_db -p 5432 -U user5 -d goalsdb; then
+                  echo "❌ Postgres did not become ready in time!"
+                  exit 1
+                fi
             - name: run code
               env:
-                DB_HOST: postgres_db        # ✅ match database.py
+                DB_HOST: postgres_db       # ✅ match database.py
                 DB_PORT: 5432
                 DB_USER: user5
                 DB_PASSWORD: pass5
