@@ -28,7 +28,10 @@ services:
       - net5-subnet
   
   flask-app2:
-    image: flaskapp:V5   
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flaskapp:V6   
     container_name: db_app6
     depends_on:
       - postgresdb
