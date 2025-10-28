@@ -18,7 +18,7 @@ jobs:
               --health-cmd="pg_isready -U user5"
               --health-interval=10s
               --health-timeout=5s
-              --health-retries=5
+              --health-retries=10
 
         steps:
             - name: checkout code
@@ -47,8 +47,8 @@ jobs:
             - name: wait for postgresDB to start
               run: |
                 echo "⏳ Waiting for Postgres service to become ready..."
-                for i in {1..20}; do
-                  if pg_isready -h postgres_db -p 5432 -U user5 -d goalsdb; then
+                for i in {1..40}; do
+                  if pg_isready -h localhost -p 5432 -U user5 -d goalsdb; then
                     echo "✅ Postgres is ready!"
                     break
                   fi
@@ -56,7 +56,7 @@ jobs:
                   sleep 5
                 done
 
-                if ! pg_isready -h postgres_db -p 5432 -U user5 -d goalsdb; then
+                if ! pg_isready -h localhost -p 5432 -U user5 -d goalsdb; then
                   echo "❌ Postgres did not become ready in time!"
                   exit 1
                 fi
