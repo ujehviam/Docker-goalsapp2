@@ -10,9 +10,9 @@ jobs:
             ports:
               - 5432:5432
             env:
-              POSTGRES_USER: user5
-              POSTGRES_PASSWORD: pass5
-              POSTGRES_DB: goalsdb
+              POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+              POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+              POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
             options: >-
               --health-cmd="pg_isready -U user5"
