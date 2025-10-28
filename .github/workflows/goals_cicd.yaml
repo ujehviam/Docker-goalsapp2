@@ -65,7 +65,7 @@ jobs:
                 DB_HOST: postgres_db       # ✅ match database.py
                 DB_PORT: 5432
                 DB_USER: user5
-                DB_PASSWORD: pass5
+                DB_PASSWORD: pass
                 DB_NAME: goalsdb
               run: |
                 source venvgoalsapp/bin/activate
