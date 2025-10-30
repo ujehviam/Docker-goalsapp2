@@ -3,11 +3,22 @@ services:
     image: postgres:16
     volumes:
       - postgresdb:/var/lib/postgresql/data
+      - ./:/Docker-goalsApp2
     env_file:
       - postgres.env
     container_name: postgres-db
     networks:
       - net5-subnet
+    environment:
+      POSTGRES_DB: postgresDataBase
+      POSTGRES_USER: user5
+      POSTGRES_PASSWORD: pass5
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+
     
 
   flask-app:

@@ -53,7 +53,7 @@ jobs:
                     break
                   fi
                   echo "Still waiting for Postgres ($i/20)..."
-                  sleep 5
+                  sleep 5 
                 done
 
                 if ! pg_isready -h localhost -p 5432 -U user5 -d goalsdb; then
