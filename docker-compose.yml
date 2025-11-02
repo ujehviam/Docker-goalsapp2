@@ -9,7 +9,7 @@ services:
       - net5-subnet
     env_file:
       - postgres.env
-    environment:
+    #environment:
       #POSTGRES_DB: goalsdb
       #POSTGRES_USER: user5
       #POSTGRES_PASSWORD: pass5
