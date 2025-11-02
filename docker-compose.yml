@@ -31,7 +31,7 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    image: flaskapp:V5
+    image: ${DOCKERHUB_USERNAME}/flask:v5
     container_name: db_app5
     ports:
       - 5043:5000
@@ -54,7 +54,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: flaskapp:V6   
+    image: ${DOCKERHUB_USERNAME}/flask:v6
     container_name: db_app6
     depends_on:
       - postgresdb
