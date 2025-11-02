@@ -103,8 +103,8 @@ jobs:
 
         - name: Build and tag docker image
           run: |
-            docker build -t ${{ secrets.DOCKHERHUB_USERNAME }}/goalsapp:v11 .
-            docker push ${{ secrets.DOCKHERHUB_USERNAME }}/goalsapp:v11
+            docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/goalsapp:v11 .
+            docker push ${{ secrets.DOCKERHUB_USERNAME }}/goalsapp:v11
             echo "✅ your image was succefully uploaded on dockerhub"
 
 
