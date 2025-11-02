@@ -4,20 +4,26 @@ services:
     volumes:
       - postgresdb:/var/lib/postgresql/data
       - ./:/Docker-goalsApp2
-    env_file:
-      - postgres.env
     container_name: postgres-db
     networks:
       - net5-subnet
+    env_file:
+      - postgres.env
     environment:
-      POSTGRES_DB: postgresDataBase
-      POSTGRES_USER: user5
-      POSTGRES_PASSWORD: pass5
+      #POSTGRES_DB: goalsdb
+      #POSTGRES_USER: user5
+      #POSTGRES_PASSWORD: pass5
+    ports:
+      - 5432:5432
 
   adminer:
+    depends_on:
+      - postgresdb
     image: adminer
     ports:
       - 8080:8080
+    networks:
+      - net5-subnet
 
     
 
@@ -33,6 +39,12 @@ services:
       - logs:/app/logs
     env_file:
       - flask-app.env
+    #environment:
+      #DB_HOST: postgres-db
+      #DB_NAME: goalsdb
+      #DB_USER: user5
+      #DB_PASSWORD: pass5
+      #DB_PORT: 5432
     depends_on:
       - postgresdb
     networks:
@@ -52,6 +64,12 @@ services:
       - 5045:5000
     env_file:
       - flask-app.env
+    #environment:
+     # DB_HOST: postgres-db
+      #DB_NAME: goalsdb
+      #DB_USER: user5
+      #DB_PASSWORD: pass5
+      #DB_PORT: 5432
     volumes:
       - log:/app/logs
     networks:
