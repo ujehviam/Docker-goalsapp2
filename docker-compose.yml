@@ -9,11 +9,6 @@ services:
       - net5-subnet
     env_file:
       - postgres.env
-    #environment:
-      #POSTGRES_DB: goalsdb
-      #POSTGRES_USER: user5
-      #POSTGRES_PASSWORD: pass5
-    ports:
       - 5432:5432
 
   adminer:
@@ -24,8 +19,6 @@ services:
       - 8080:8080
     networks:
       - net5-subnet
-
-    
 
   flask-app:
     build: 
@@ -39,12 +32,6 @@ services:
       - logs:/app/logs
     env_file:
       - flask-app.env
-    #environment:
-      #DB_HOST: postgres-db
-      #DB_NAME: goalsdb
-      #DB_USER: user5
-      #DB_PASSWORD: pass5
-      #DB_PORT: 5432
     depends_on:
       - postgresdb
     networks:
@@ -64,12 +51,6 @@ services:
       - 5045:5000
     env_file:
       - flask-app.env
-    #environment:
-     # DB_HOST: postgres-db
-      #DB_NAME: goalsdb
-      #DB_USER: user5
-      #DB_PASSWORD: pass5
-      #DB_PORT: 5432
     volumes:
       - log:/app/logs
     networks:

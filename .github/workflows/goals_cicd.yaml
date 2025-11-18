@@ -97,9 +97,6 @@ jobs:
             docker compose build
             docker compose push
             echo "✅ your images was succefully uploaded on dockerhub"
-           # docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/goalsapp:v11 .
-           # docker push ${{ secrets.DOCKERHUB_USERNAME }}/goalsapp:v11
-            
 
 
       
